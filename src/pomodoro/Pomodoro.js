@@ -258,7 +258,7 @@ function Pomodoro() {
               className="btn btn-primary"
               data-testid="play-pause"
               title="Start or pause timer"
-              onClick={playPause}
+              onClick={() => playPause()}
             >
               <span
                 className={classNames({
