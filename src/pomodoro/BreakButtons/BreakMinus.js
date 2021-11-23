@@ -7,6 +7,7 @@ function BreakMinus ({session, handleBreakDecrease}) {
                 type="button"
                 className="btn btn-secondary"
                 data-testid="decrease-break"
+                disabled={true}
             >
                 <span className="oi oi-minus" />
             </button>

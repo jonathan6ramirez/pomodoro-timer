@@ -7,6 +7,7 @@ function BreakPlus ({session, handleBreakIncrease}) {
                 type="button"
                 className="btn btn-secondary"
                 data-testid="increase-break"
+                disabled={true}
             >
                 <span className="oi oi-plus" />
             </button>

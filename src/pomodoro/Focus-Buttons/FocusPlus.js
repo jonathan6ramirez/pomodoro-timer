@@ -8,6 +8,7 @@ function FocusPlus ({session, handleFocusIncrease}) {
         type="button"
         className="btn btn-secondary"
         data-testid="increase-focus"
+        disabled={true}
       >
         <span className="oi oi-plus" />
       </button>
