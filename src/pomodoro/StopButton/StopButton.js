@@ -1,7 +1,6 @@
 import React from "react";
 
 function StopButton ({session, handleReset}) {
-    console.log("---this is the type of----",handleReset)
     return (
         <>
         {/* TODO: Implement stopping the current focus or break session. and disable the stop button when there is no active session */}
