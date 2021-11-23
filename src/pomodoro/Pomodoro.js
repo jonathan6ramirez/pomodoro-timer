@@ -1,8 +1,27 @@
 import React, { useState } from "react";
 import classNames from "../utils/class-names";
 import useInterval from "../utils/useInterval";
-import InSession from "./focus-and-bar/InSession";
+
+//Import the Focus minus and plus buttons
+import FocusMinus from "./Focus-Buttons/FocusMinus";
+import FocusPlus from "./Focus-Buttons/FocusPlus";
+
+//Import the Break minus and plus buttons
+import BreakMinus from "./BreakButtons/BreakMinus";
+import BreakPlus from "./BreakButtons/BreakPlus";
+
+//Import the Stop Button
+import StopButton from "./StopButton/StopButton";
+
+//Import the Session label
+import SessionLabel from "./focus-and-bar/SessionLabel";
+
+//Import the ProgressBar
+import ProgressBar from "./focus-and-bar/ProgressBar";
+
+//Import the Util Functions
 import { minutesToDuration } from "../utils/duration";
+
 
 // These functions are defined outside of the component to insure they do not have access to state
 // and are, therefore more likely to be pure.
@@ -104,7 +123,7 @@ function Pomodoro() {
   };
   
   // Reset the session
-  const handleReset = ( ) => {
+  function handleReset ( ){
     setIsTimerRunning(false);
     setSession(null);  
   }
@@ -127,7 +146,7 @@ function Pomodoro() {
   /**
    * Called whenever the play/pause button is clicked.
    */
-  function playPause() {
+const playPause = () => {
     setIsTimerRunning((prevState) => {
       const nextState = !prevState;
       if (nextState) {
@@ -159,41 +178,9 @@ function Pomodoro() {
             </span>
             <div className="input-group-append">
               {/* TODO: Implement decreasing focus duration and disable during a focus or break session */}
-              {session ? 
-                <button
-                type="button"
-                className="btn btn-secondary"
-                data-testid="decrease-focus"
-              >
-                <span className="oi oi-minus" />
-              </button> : 
-              <button
-              type="button"
-              className="btn btn-secondary"
-              data-testid="decrease-focus"
-              onClick={() => handleFocusDecrease("focusDuration")}
-            >
-              <span className="oi oi-minus" />
-            </button>
-              }
+              <FocusMinus session={session} handleFocusDecrease={handleFocusDecrease}/>
               {/* TODO: Implement increasing focus duration  and disable during a focus or break session */}
-              { session ? 
-                <button
-                type="button"
-                className="btn btn-secondary"
-                data-testid="increase-focus"
-              >
-                <span className="oi oi-plus" />
-              </button> :
-                <button
-                type="button"
-                className="btn btn-secondary"
-                data-testid="increase-focus"
-                onClick={() => handleFocusIncrease("focusDuration")}
-              >
-                <span className="oi oi-plus" />
-              </button>
-              }
+              <FocusPlus session={session} handleFocusIncrease={handleFocusIncrease}/>
             </div>
           </div>
         </div>
@@ -206,50 +193,48 @@ function Pomodoro() {
               </span>
               <div className="input-group-append">
                 {/* TODO: Implement decreasing break duration and disable during a focus or break session*/}
-                { session ? 
-                  <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-testid="decrease-break"
-                >
-                  <span className="oi oi-minus" />
-                </button> : 
-                  <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-testid="decrease-break"
-                  onClick={() => handleBreakDecrease("breakDuration")}
-                >
-                  <span className="oi oi-minus" />
-                </button>
-                }
+                <BreakMinus session={session} handleBreakDecrease={handleBreakDecrease} />
                 {/* TODO: Implement increasing break duration and disable during a focus or break session*/}
-                { session ? 
-                  <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-testid="increase-break"
-                >
-                  <span className="oi oi-plus" />
-                </button> :
-                  <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-testid="increase-break"
-                  onClick={() => handleBreakIncrease("breakDuration")}
-                >
-                  <span className="oi oi-plus" />
-                </button>
-                }
+                <BreakPlus session={session} handleBreakIncrease={handleBreakIncrease} />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <InSession session={session} 
-      focusDuration={focusDuration} 
-      breakDuration={breakDuration}
-      isTimerRunning={isTimerRunning}/>
+      <div className="row">
+        <div className="col">
+          <div
+            className="btn-group btn-group-lg mb-2"
+            role="group"
+            aria-label="Timer controls"
+          >
+            <button
+            type="button"
+            className="btn btn-primary"
+            data-testid="play-pause"
+            title="Start or pause timer"
+            onClick={() => playPause()}
+          >
+            <span
+              className={classNames({
+                oi: true,
+                "oi-media-play": !isTimerRunning,
+                "oi-media-pause": isTimerRunning,
+              })}
+            />
+          </button>
+            <StopButton session={session} handleReset={handleReset}/>
+          </div>
+        </div>
+      </div>
+      <SessionLabel 
+        session={session}
+        focusDuration={focusDuration}
+        breakDuration={breakDuration}
+        isTimerRunning={isTimerRunning}
+      />
+      <ProgressBar session={session} focusDuration={focusDuration} breakDuration={breakDuration} />
+      
     </div>
   );
 }
