@@ -123,9 +123,9 @@ function Pomodoro() {
   };
   
   // Reset the session
-  function handleReset ( ){
-    setIsTimerRunning(false);
-    setSession(null);  
+  const handleReset = ( ) => {
+    setIsTimerRunning(()=> false);
+    setSession(()=> null);  
   }
 
   /**
