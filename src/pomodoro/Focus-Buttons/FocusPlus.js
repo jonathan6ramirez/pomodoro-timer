@@ -19,7 +19,7 @@ function FocusPlus ({session, handleFocusIncrease}) {
         type="button"
         className="btn btn-secondary"
         data-testid="increase-focus"
-        onClick={() => handleFocusIncrease("focusDuration")}
+        onClick={() => handleFocusIncrease()}
       >
         <span className="oi oi-plus" />
       </button>

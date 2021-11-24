@@ -58,12 +58,12 @@ function nextSession(focusDuration, breakDuration) {
     if (currentSession.label === "Focusing") {
       return {
         label: "On Break",
-        timeRemaining: breakDuration["breakDuration"] * 60,
+        timeRemaining: breakDuration * 60,
       };
     }
     return {
       label: "Focusing",
-      timeRemaining: focusDuration["focusDuration"] * 60,
+      timeRemaining: focusDuration * 60,
     };
   };
 }
@@ -75,57 +75,45 @@ function Pomodoro() {
   const [session, setSession] = useState(null);
 
   // ToDo: Allow the user to adjust the focus and break duration.
-  const [focusDuration, setFocusDuration] = useState({"focusDuration": 25});
-  const [breakDuration, setBreakDuration] = useState({"breakDuration": 5});
+  const [focusDuration, setFocusDuration] = useState(25);
+  const [breakDuration, setBreakDuration] = useState(5);
   
   // Decrease and increase handlers for focus duration
-  const handleFocusDecrease = (value) => {
-    if (focusDuration["focusDuration"] <= 5) {
+  const handleFocusDecrease = () => {
+    if (focusDuration <= 5) {
       return null;
     } else {
-        setFocusDuration({
-        ...focusDuration,
-        [value]: focusDuration[value] - 5,
-      });
+        setFocusDuration((currentValue) => currentValue - 5)
     }
   };
-  const handleFocusIncrease = (value) => {
-    if (60 <= focusDuration["focusDuration"]){
+  const handleFocusIncrease = () => {
+    if (60 <= focusDuration){
       return null;
     } else {
-      setFocusDuration({
-        ...focusDuration,
-        [value]: focusDuration[value] + 5,
-      });
+      setFocusDuration((currentValue) => currentValue + 5)
     }
   };
 
   // Decrease and increase handlers for break duration
   const handleBreakDecrease = (value) => {
-    if (breakDuration["breakDuration"] <= 1){
+    if (breakDuration <= 1){
       return null;
     } else {
-      setBreakDuration({
-        ...breakDuration,
-        [value]: breakDuration[value] - 1,
-      });
+      setBreakDuration((currentValue) => currentValue - 1);
     }
   };
   const handleBreakIncrease = (value) => {
-    if (15 <= breakDuration["breakDuration"]) {
+    if (15 <= breakDuration) {
       return null;
     } else {
-      setBreakDuration({
-        ...breakDuration,
-        [value]: breakDuration[value] + 1,
-      });
+      setBreakDuration((currentValue) => currentValue + 1);
     }
   };
   
   // Reset the session
   const handleReset = ( ) => {
-    setIsTimerRunning(()=> false);
-    setSession(()=> null);  
+    setIsTimerRunning(false);
+    setSession(null);  
   }
 
   /**
@@ -156,7 +144,7 @@ const playPause = () => {
           if (prevStateSession === null) {
             return {
               label: "Focusing",
-              timeRemaining: focusDuration["focusDuration"] * 60,
+              timeRemaining: focusDuration * 60,
             };
           }
           return prevStateSession;
@@ -174,7 +162,7 @@ const playPause = () => {
           <div className="input-group input-group-lg mb-2">
             <span className="input-group-text" data-testid="duration-focus">
               {/* TODO: Update this text to display the current focus session duration */}
-              Focus Duration: {minutesToDuration(focusDuration["focusDuration"])}
+              Focus Duration: {minutesToDuration(focusDuration)}
             </span>
             <div className="input-group-append">
               {/* TODO: Implement decreasing focus duration and disable during a focus or break session */}
@@ -189,7 +177,7 @@ const playPause = () => {
             <div className="input-group input-group-lg mb-2">
               <span className="input-group-text" data-testid="duration-break">
                 {/* TODO: Update this text to display the current break session duration */}
-                Break Duration: {minutesToDuration(breakDuration["breakDuration"])}
+                Break Duration: {minutesToDuration(breakDuration)}
               </span>
               <div className="input-group-append">
                 {/* TODO: Implement decreasing break duration and disable during a focus or break session*/}

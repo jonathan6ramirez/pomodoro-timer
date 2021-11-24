@@ -18,7 +18,7 @@ function BreakMinus ({session, handleBreakDecrease}) {
                 type="button"
                 className="btn btn-secondary"
                 data-testid="decrease-break"
-                onClick={() => handleBreakDecrease("breakDuration")}
+                onClick={() => handleBreakDecrease()}
             >
                 <span className="oi oi-minus" />
             </button>

@@ -4,7 +4,7 @@ function ProgressBar ({session, focusDuration, breakDuration}) {
   if(session) {
     function calculatePercetage () {
       let currentSeconds = 0;
-      session.label === "Focusing" ? currentSeconds = focusDuration["focusDuration"] : currentSeconds = breakDuration["breakDuration"]
+      session.label === "Focusing" ? currentSeconds = focusDuration : currentSeconds = breakDuration
       const seconds = currentSeconds * 60;
       let percentage = Math.round(((seconds - session.timeRemaining) / seconds) * 100);
       return percentage;
@@ -12,7 +12,7 @@ function ProgressBar ({session, focusDuration, breakDuration}) {
     function calculateAriaValue () {
       let durationSeconds = 0;
       let ariaValue = 0;
-      session.label === "Focusing" ? durationSeconds = focusDuration["focusDuration"] : durationSeconds = breakDuration["breakDuration"]
+      session.label === "Focusing" ? durationSeconds = focusDuration : durationSeconds = breakDuration
       const seconds = durationSeconds * 60;
       if (session.timeRemaining == seconds){
         return ariaValue;
